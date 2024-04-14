@@ -8,6 +8,7 @@ export class UsersService {
     constructor(@InjectModel(User) private userRepository: typeof User){}
 
     async createUser(dto: CreateUserDto){
+        console.log(dto)
         const user = await this.userRepository.create(dto)
         return user
     }
@@ -19,6 +20,10 @@ export class UsersService {
 
     async getUserByLogin(login: string){
         return this.userRepository.findOne({where:{login}, include: {all:true}})
+    }
+
+    async deleteUser(data){
+        this.userRepository.destroy({where: {id:data.id}})
     }
 
 }
